@@ -7,8 +7,8 @@ from typing import Literal
 import joblib
 import pandas as pd
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse
+from pydantic import BaseModel, Field
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("xg-api")

@@ -1,0 +1,1 @@
+![CI](https://github.com/denzelperezrvr/xg-api/actions/workflows/ci.yml/badge.svg)

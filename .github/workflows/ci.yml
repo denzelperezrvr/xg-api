@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run pytest -v
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t xg-api .
+      - name: Smoke test
+        run: |
+          docker run -d --name xg -p 8080:8080 xg-api
+          for i in $(seq 1 20); do
+            curl -sf http://localhost:8080/health && break
+            sleep 2
+          done
+          curl -sf -X POST http://localhost:8080/predict \
+            -H "Content-Type: application/json" \
+            -d '{"x": 108, "y": 40, "shot_body_part": "Right Foot"}'
+          docker logs xg

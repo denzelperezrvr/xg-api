@@ -107,9 +107,24 @@ Coordinates follow the StatsBomb convention: a 120 x 80 pitch, attacking the goa
 ## Roadmap
 
 - [ ] Freeze-frame features from StatsBomb 360 data
-- [ ] Drift monitoring with Evidently
 - [ ] Model registry and scheduled retraining (MLflow)
 
 ## Data
 
 Shot data comes from [StatsBomb Open Data](https://github.com/statsbomb/open-data). Please credit StatsBomb if you reuse or publish anything derived from it.
+
+## Monitoring
+
+Every prediction is logged (inputs, output, model version) to a JSONL file. `xg.monitor`
+compares recent traffic against a reference sample of the training data with Evidently
+and produces a drift report on inputs and on the predicted xG.
+
+![Drift report](docs/drift_shifted.png)
+
+A control run with training-like traffic shows no meaningful drift; a simulated shift
+(long-range shots, more headers, more pressure) is flagged on the relevant features and on
+the prediction itself.
+
+**Limitation:** logs are written to local disk. On Render's free tier the disk is ephemeral,
+so the deployed demo loses them on restart. A production setup would ship them to a database
+or object storage and run the report on a schedule.

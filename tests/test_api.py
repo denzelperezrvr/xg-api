@@ -1,3 +1,4 @@
+import json
 import pytest
 from fastapi.testclient import TestClient
 
@@ -61,3 +62,13 @@ def test_batch_matches_single():
 
 def test_empty_batch_returns_422():
     assert client.post("/predict/batch", json={"shots": []}).status_code == 422
+
+def test_prediction_is_logged(tmp_path, monkeypatch):
+    log = tmp_path / "log.jsonl"
+    monkeypatch.setenv("XG_LOG_PATH", str(log))
+    client.post("/predict", json=PENALTY_SPOT)
+    lines = log.read_text().strip().splitlines()
+    assert len(lines) == 1
+    record = json.loads(lines[0])
+    assert record["x"] == 108
+    assert 0 <= record["xg"] <= 1

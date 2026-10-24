@@ -9,6 +9,7 @@ import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
+from xg.prediction_log import log_predictions
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("xg-api")
@@ -70,6 +71,7 @@ def predict(shot: Shot):
     start = time.perf_counter()
     xg = predict_xg([shot])[0]
     ms = (time.perf_counter() - start) * 1000
+    log_predictions([shot.model_dump()], [xg], MODEL_VERSION)   # nuevo
     logger.info("predict xg=%.4f latency_ms=%.1f input=%s", xg, ms, shot.model_dump())
     return {"xg": xg, "model_version": MODEL_VERSION}
 
@@ -79,5 +81,6 @@ def predict_batch(req: BatchRequest):
     start = time.perf_counter()
     xgs = predict_xg(req.shots)
     ms = (time.perf_counter() - start) * 1000
+    log_predictions([s.model_dump() for s in req.shots], xgs, MODEL_VERSION)   # nuevo
     logger.info("predict_batch n=%d latency_ms=%.1f", len(xgs), ms)
     return {"xg": xgs, "model_version": MODEL_VERSION}

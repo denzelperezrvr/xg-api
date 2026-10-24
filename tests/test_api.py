@@ -8,6 +8,10 @@ client = TestClient(app)
 PENALTY_SPOT = {"x": 108, "y": 40, "shot_body_part": "Right Foot"}
 MIDFIELD = {"x": 60, "y": 40, "shot_body_part": "Right Foot"}
 
+def test_index_serves_ui():
+    r = client.get("/")
+    assert r.status_code == 200
+    assert "Calculadora de xG" in r.text
 
 def test_health():
     r = client.get("/health")

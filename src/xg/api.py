@@ -8,6 +8,7 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
+from fastapi.responses import FileResponse
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("xg-api")
@@ -52,6 +53,12 @@ def predict_xg(shots: list[Shot]) -> list[float]:
     probs = model.predict_proba(df)[:, 1]
     return [round(float(p), 4) for p in probs]
 
+STATIC_DIR = Path(__file__).parent / "static"
+
+
+@app.get("/", include_in_schema=False)
+def index():
+    return FileResponse(STATIC_DIR / "index.html")
 
 @app.get("/health")
 def health():

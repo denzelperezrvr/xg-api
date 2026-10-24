@@ -9,6 +9,7 @@ import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
+
 from xg.prediction_log import log_predictions
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")

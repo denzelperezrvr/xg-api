@@ -1,0 +1,31 @@
+{
+  "model": "xgboost",
+  "trained_on": "2026-10-19",
+  "n_shots": 99746,
+  "cv_results": [
+    {
+      "model": "prior (sin features)",
+      "log_loss": 0.3307,
+      "brier": 0.0921,
+      "roc_auc": 0.5
+    },
+    {
+      "model": "logreg distance+angle",
+      "log_loss": 0.2951,
+      "brier": 0.084,
+      "roc_auc": 0.7371
+    },
+    {
+      "model": "logreg todas las features",
+      "log_loss": 0.2797,
+      "brier": 0.08,
+      "roc_auc": 0.7792
+    },
+    {
+      "model": "xgboost",
+      "log_loss": 0.2776,
+      "brier": 0.0797,
+      "roc_auc": 0.7832
+    }
+  ]
+}

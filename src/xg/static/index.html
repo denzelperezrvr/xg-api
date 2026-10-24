@@ -36,6 +36,24 @@ select{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--line
 select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .check{display:flex;align-items:center;gap:10px;margin:12px 0 0;color:var(--text);font-size:.95rem}
 .check input{width:18px;height:18px;accent-color:var(--accent)}
+@media(max-width:780px){
+  main{padding:10px 12px 14px}
+  header{margin-bottom:8px}
+  h1{font-size:1.15rem}
+  header p{display:none}
+  .layout{gap:10px}
+  .readout{margin-top:4px;font-size:.78rem;gap:12px}
+  .panel{padding:12px 14px}
+  .xg{font-size:2.3rem}
+  .result span{font-size:.8rem}
+  .bar{margin:8px 0 4px}
+  hr{margin:8px 0}
+  label{margin:6px 0 2px;font-size:.75rem}
+  select{padding:6px 8px;font-size:.85rem}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+  .checks{display:flex;gap:16px}
+  .check{margin-top:8px;font-size:.85rem}
+}
 </style>
 </head>
 <body>
@@ -70,12 +88,16 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
     <div class="bar"><i id="fill"></i></div>
     <p id="msg">Calculando…</p>
     <hr>
-    <label for="shot_body_part">Parte del cuerpo</label><select id="shot_body_part"></select>
-    <label for="shot_type">Tipo de tiro</label><select id="shot_type"></select>
-    <label for="shot_technique">Técnica</label><select id="shot_technique"></select>
-    <label for="play_pattern">Origen de la jugada</label><select id="play_pattern"></select>
-    <label class="check"><input type="checkbox" id="shot_first_time"> Tiro de primera</label>
-    <label class="check"><input type="checkbox" id="under_pressure"> Bajo presión</label>
+    <div class="fields">
+      <div><label for="shot_body_part">Parte del cuerpo</label><select id="shot_body_part"></select></div>
+      <div><label for="shot_type">Tipo de tiro</label><select id="shot_type"></select></div>
+      <div><label for="shot_technique">Técnica</label><select id="shot_technique"></select></div>
+      <div><label for="play_pattern">Origen de la jugada</label><select id="play_pattern"></select></div>
+    </div>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="shot_first_time"> Tiro de primera</label>
+      <label class="check"><input type="checkbox" id="under_pressure"> Bajo presión</label>
+    </div>
   </section>
 </div>
 </main>

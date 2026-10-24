@@ -1,6 +1,6 @@
 {
   "model": "xgboost",
-  "trained_on": "2026-10-19",
+  "trained_on": "2026-10-23",
   "n_shots": 99746,
   "cv_results": [
     {
